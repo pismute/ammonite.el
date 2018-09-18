@@ -1,0 +1,43 @@
+* Ammonite.el
+
+This is a simple extension of ~ansi-term~ for ~ammonite~. It's developed as a back-end for ~ob-scala.el~
+
+** ob-scala.el
+
+Please make sure this mod place in ~load-path~ first to use ~ammonite~ as ob-scala's backend. [[[[https://github.com/ensime/emacs-scala-mode]]][scala-mode]] has own ~ob-scala.el~ which is backed by ~ensime~.
+
+Have fun!:
+
+#+BEGIN_SRC scala :export
+1 + 1
+#+END_SRC
+
+#+BEGIN_SRC
+#+RESULTS:
+: 2
+#+END_SRC
+
+** Conventional predef.sc
+
+It looks for ~predef.sc~ location conventionally. If the file path of current buffer is ~$HOME/my/node/scala.org~, it will search the file in following order:
+
+1. ~$HOME/my/node/predef.sc~
+2. ~$HOME/my/predef.sc~
+3. ~$HOME/predef.sc~
+
+For example If the path is ~$HOME/my/node/predef.sc~, ammonite command will be ~amm --predef $HOME/my/node/predef.sc~. If current buffer has no path or ~predef.sc~ is not found, it will be ~amm~ as default.
+
+** Examples
+
+#+INCLUDE: "predef.sc" src scala
+
+The codes can be evaluated without ~imports~, because ~import java.time._~ is defined in ~predef.sc~:
+
+#+BEGIN_SRC scala :export
+LocalDateTime.now()
+#+END_SRC
+
+#+BEGIN_SRC
+#+RESULTS:
+: 2018-09-18T08:47:31.225
+#+END_SRC
